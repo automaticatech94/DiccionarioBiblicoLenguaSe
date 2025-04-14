@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Diccionario Bíblico LESDOM</title>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="./images/Logo.png" alt="Logo">
+      <h1>Diccionario Bíblico LESDOM</h1>
+    </div>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Busca un término bíblico...">
+  </div>
+
+  <main>
+    <div class="accordion">
+      <div class="section-title desktop-only">Libros disponibles</div>
+      <button class="accordion-btn mobile-only">Libros disponibles</button>
+      <div class="accordion-content">
+        <div class="list"></div>
+      </div>
+    </div>
+    
+    
+
+
+    </div>
+
+    <div class="content">
+      <h2>Videos disponibles</h2>
+      <div class="section-title"></div>
+    
+      <div id="video-section" class="term-list">
+        <p>Cargando títulos...</p>
+      </div>
+    </div>
+    
+  </main>
+
+  <footer>
+    Diccionario Bíblico LESDOM © 2025 - Todos los derechos reservados
+  </footer>
+
+  <!-- Script que carga los videos dinámicamente -->
+  
+  <script src="./js/cargarindex.js"></script>
+  <script src="./js/acordionjs.js"></script>
+</body>
+</html>
