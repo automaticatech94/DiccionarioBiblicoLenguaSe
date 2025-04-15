@@ -1,13 +1,15 @@
-let todosLosVideos = []; // variable global para guardar todos los videos
+let todosLosVideos = [];
 
 async function cargarDatos() {
   try {
     const response = await fetch('https://7c5dektstg.execute-api.us-east-1.amazonaws.com/test/videos');
     const data = await response.json();
 
-    todosLosVideos = data; // guardar todos los videos
-    cargarVideos(todosLosVideos); // mostrar todos por defecto
-    cargarCategorias(todosLosVideos); // mostrar libros únicos
+    todosLosVideos = data;
+    cargarCategorias(todosLosVideos);
+    configurarBusqueda(); // activamos búsqueda
+
+    // Mostrar mensaje por defecto (ya viene en el HTML)
   } catch (error) {
     console.error('Error al cargar los datos:', error);
     document.getElementById('video-section').innerHTML = '<p>No se pudieron cargar los títulos.</p>';
@@ -16,10 +18,10 @@ async function cargarDatos() {
 
 function cargarVideos(data) {
   const contenedor = document.getElementById('video-section');
-  contenedor.innerHTML = ''; // limpia el contenido actual
+  contenedor.innerHTML = ''; // limpia todo
 
   if (data.length === 0) {
-    contenedor.innerHTML = '<p>No hay videos disponibles para esta categoría.</p>';
+    contenedor.innerHTML = '<p>No hay videos disponibles para esta búsqueda.</p>';
     return;
   }
 
@@ -39,7 +41,7 @@ function cargarVideos(data) {
 
 function cargarCategorias(data) {
   const listaContenedor = document.querySelector('.accordion .list');
-  listaContenedor.innerHTML = ''; // limpia la lista
+  listaContenedor.innerHTML = '';
 
   const categoriasUnicas = new Set();
   data.forEach(video => {
@@ -48,17 +50,15 @@ function cargarCategorias(data) {
     }
   });
 
-  // Agrega botón para ver todos
   const botonTodos = document.createElement('div');
   botonTodos.textContent = 'Todos';
   botonTodos.classList.add('categoria-item');
   botonTodos.style.cursor = 'pointer';
   botonTodos.style.margin = '5px 0';
   botonTodos.style.fontWeight = 'bold';
-  botonTodos.addEventListener('click', () => cargarVideos(todosLosVideos));
+  botonTodos.addEventListener('click', () => mostrarTodos());
   listaContenedor.appendChild(botonTodos);
 
-  // Agrega categorías individuales
   categoriasUnicas.forEach(book => {
     const div = document.createElement('div');
     div.textContent = book;
@@ -66,7 +66,6 @@ function cargarCategorias(data) {
     div.style.cursor = 'pointer';
     div.style.margin = '5px 0';
 
-    // Evento para filtrar por categoría
     div.addEventListener('click', () => {
       const filtrados = todosLosVideos.filter(video => video.category === book);
       cargarVideos(filtrados);
@@ -74,6 +73,42 @@ function cargarCategorias(data) {
 
     listaContenedor.appendChild(div);
   });
+}
+
+function configurarBusqueda() {
+  const inputBusqueda = document.getElementById('search-input');
+
+  inputBusqueda.addEventListener('input', () => {
+    const termino = inputBusqueda.value.trim().toLowerCase();
+
+    if (termino === '') {
+      mostrarBienvenida();
+      return;
+    }
+
+    const filtrados = todosLosVideos.filter(video =>
+      video.titleOfficial.toLowerCase().includes(termino)
+    );
+
+    cargarVideos(filtrados);
+  });
+}
+
+function mostrarBienvenida() {
+  const contenedor = document.getElementById('video-section');
+  contenedor.innerHTML = `
+    <div id="mensaje-bienvenida">
+      <p><strong>¡Bienvenido al Diccionario Bíblico LESDOM!</strong></p>
+      <p>En LESDOM hemos recopilado y organizado términos bíblicos expresados en lengua de señas, con el propósito de facilitar el acceso al conocimiento de las Escrituras de forma inclusiva y visual.</p>
+      <p>Solo tienes que escribir en el cuadro de búsqueda el término que deseas explorar, o navegar por los libros disponibles para descubrir las señas relacionadas.</p>
+      <p>Este proyecto está en constante desarrollo. Si deseas colaborar o apoyar, contáctanos en <strong>contacto@lesdom.org</strong>.</p>
+      <p><em>El contenido es solo para uso personal o educativo. Para usos comerciales o de investigación, solicita permiso previamente.</em></p>
+    </div>
+  `;
+}
+
+function mostrarTodos() {
+  cargarVideos(todosLosVideos);
 }
 
 window.addEventListener('DOMContentLoaded', cargarDatos);
