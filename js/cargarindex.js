@@ -98,8 +98,8 @@ function mostrarBienvenida() {
   const contenedor = document.getElementById('video-section');
   contenedor.innerHTML = `
     <div id="mensaje-bienvenida">
-      <p><strong>¡Bienvenido al Diccionario Bíblico LESDOM!</strong></p>
-      <p>En LESDOM hemos recopilado y organizado términos bíblicos expresados en lengua de señas, con el propósito de facilitar el acceso al conocimiento de las Escrituras de forma inclusiva y visual.</p>
+      <p><strong>¡Bienvenido al Diccionario Bíblico Dominicano EnSeña!</strong></p>
+      <p>En EnSeña hemos recopilado y organizado términos bíblicos expresados en lengua de señas, con el propósito de facilitar el acceso al conocimiento de las Escrituras de forma inclusiva y visual.</p>
       <p>Solo tienes que escribir en el cuadro de búsqueda el término que deseas explorar, o navegar por los libros disponibles para descubrir las señas relacionadas.</p>
       <p>Este proyecto está en constante desarrollo. Si deseas colaborar o apoyar, contáctanos en <strong>contacto@lesdom.org</strong>.</p>
       <p><em>El contenido es solo para uso personal o educativo. Para usos comerciales o de investigación, solicita permiso previamente.</em></p>
